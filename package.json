@@ -1,0 +1,16 @@
+{
+  "name": "my-mentors",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter web dev & pnpm --filter api start:dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "ts-node": "^10.9.2",
+    "eslint": "^9.9.0",
+    "prettier": "^3.3.3"
+  }
+}

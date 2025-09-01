@@ -1,0 +1,27 @@
+# Dependências
+node_modules/
+**/node_modules/
+
+# Build / output
+dist/
+build/
+.next/
+.nuxt/
+out/
+coverage/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDEs / configs locais
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Env files
+.env
+.env.*
