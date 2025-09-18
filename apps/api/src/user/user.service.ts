@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 import argon2 from 'argon2';
-import { PrismaClient } from 'generated/prisma';
 import { IUser } from 'src/constants/user-types';
 import { FindUserDTO } from 'src/dto/user';
 import { v4 } from 'uuid';
@@ -35,6 +35,20 @@ export class UserService {
                 const responseUser = new FindUserDTO(user)
                 return responseUser
             }
+        } catch (e) {
+            throw e
+        }
+    }
+
+    async listMentors(): Promise<Array<FindUserDTO> | null> {
+        try {
+            const mentors = await prisma.user.findMany({
+                where: {
+                    role: "MENTOR"
+                }
+            })
+            const listOfMentorsResponse = mentors.map(mentor => new FindUserDTO(mentor))
+            return listOfMentorsResponse
         } catch (e) {
             throw e
         }

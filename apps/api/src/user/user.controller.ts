@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
 import { UserService } from './user.service';
 import * as userTypes from 'src/constants/user-types';
 import userValidator from './user.validator';
@@ -13,8 +13,15 @@ export class UserController {
     await this.userService.createUser(user as userTypes.IUser);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get(':username')
   async findUser(@Param('username') username: string) {
     return await this.userService.findByUsername(username);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('/list/mentors')
+  async listMentors() {
+    return await this.userService.listMentors();
   }
 }
