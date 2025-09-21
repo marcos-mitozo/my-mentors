@@ -1,28 +1,34 @@
-'use client'
-import React, { useState } from "react";
-import { ThemeProvider, useTheme } from "styled-components";
-import { Header } from "../components/Header";
-import { Footer } from "@/components/Footer";
-import { MainContainer } from "@/components/MainContainer";
-import { Card } from "@/components/Card";
-import { Button } from "@/components/Button";
-import { lightTheme, darkTheme } from "@/styles/theme";
-import { Drawer } from "@/components/Drawer";
+"use client";
+
+import React from "react";
+import { MainContainer } from "@components/MainContainer";
+import { ProfileCard } from "@components/ProfileCard";
+import { useMentors } from "@hooks/useMentors";
+import { paths } from "../../../types/api";
+import Image from "next/image";
+
+type Mentor = paths["/user/list/mentors"]["get"]["responses"]["200"]["content"]["application/json"]["results"][0];
 
 function App() {
-  const [isLightTheme, setIsLightTheme] = useState(true)
+  const { mentors, loading, error } = useMentors();
+
+  if (loading) return <p>Carregando mentores...</p>;
+  if (error) return <p>Erro: {error}</p>;
 
   return (
-    <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
-      <Header>
-        <Drawer />
-        <Button variant="secondary" onClick={() => setIsLightTheme(!isLightTheme)}>Change theme</Button>
-      </Header>
-      <MainContainer>
-        <Card>Welcome!</Card>
-      </MainContainer>
-      <Footer />
-    </ThemeProvider>
+    <MainContainer>
+      {mentors.map((mentor: Mentor, index: number) => (
+        <ProfileCard key={`mentor-${index}`}>
+          <Image 
+            alt={`mentor-${index}`}
+            src={`/assets/mentor-${index+1}.jpg`}
+            width={150}
+            height={100}
+          />
+          {mentor.bio}
+        </ProfileCard>
+      ))}
+    </MainContainer>
   );
 }
 

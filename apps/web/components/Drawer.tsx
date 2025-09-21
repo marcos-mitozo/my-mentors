@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { IconHelp, IconHome, IconSettings, IconStats } from "./DrawerIcons";
 import { HamburgerButton } from "./HamburgerButton";
+import Link from "next/link";
 
 export const Drawer: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -14,14 +15,18 @@ export const Drawer: React.FC = () => {
 
       <Container open={open}>
         <Menu>
-          <MenuItem>
-            <IconHome />
-            Home
-          </MenuItem>
-          <MenuItem>
-            <IconStats />
-            Estatísticas
-          </MenuItem>
+          <Link href="/">
+            <MenuItem>
+              <IconHome />
+              Home
+            </MenuItem>
+          </Link>
+          <Link href="/pages/statistics">
+            <MenuItem>
+              <IconStats />
+              Estatísticas
+            </MenuItem>
+          </Link>
           <MenuItem>
             <IconSettings />
             Configurações
