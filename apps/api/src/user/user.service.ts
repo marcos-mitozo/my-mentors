@@ -40,7 +40,7 @@ export class UserService {
         }
     }
 
-    async listMentors(): Promise<Array<FindUserDTO> | null> {
+    async listMentors(): Promise<Array<FindUserDTO>> {
         try {
             const mentors = await prisma.user.findMany({
                 where: {
