@@ -6,13 +6,11 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Iniciando seed...");
 
-  // Limpando dados antigos (opcional, cuidado em prod!)
   await prisma.booking.deleteMany();
   await prisma.slot.deleteMany();
   await prisma.mentor.deleteMany();
   await prisma.user.deleteMany();
 
-  // Criando usuários (mentores e mentees)
   const users = await prisma.user.createMany({
     data: [
       {
@@ -46,13 +44,11 @@ async function main() {
     ],
   });
 
-  // Pegando usuários mentores
   const alice = await prisma.user.findUnique({ where: { username: "alice" } });
   const bob = await prisma.user.findUnique({ where: { username: "bob" } });
   const carol = await prisma.user.findUnique({ where: { username: "carol" } });
   const david = await prisma.user.findUnique({ where: { username: "david" } });
 
-  // Criando mentores com ratings diferentes
   const mentors = await prisma.mentor.createMany({
     data: [
       {
@@ -76,12 +72,10 @@ async function main() {
     ],
   });
 
-  // Pegando mentores para slots
   const mentorAlice = await prisma.mentor.findFirst({ where: { userId: alice!.id } });
   const mentorBob = await prisma.mentor.findFirst({ where: { userId: bob!.id } });
   const mentorCarol = await prisma.mentor.findFirst({ where: { userId: carol!.id } });
 
-  // Criando slots
   const slots = await prisma.slot.createMany({
     data: [
       {
@@ -105,7 +99,6 @@ async function main() {
     ],
   });
 
-  // Criando um booking para David
   const slotAlice = await prisma.slot.findFirst({ where: { mentorId: mentorAlice!.id } });
 
   if (slotAlice && david) {

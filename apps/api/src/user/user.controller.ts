@@ -3,10 +3,10 @@ import { UserService } from './user.service';
 import * as userTypes from 'src/constants/user-types';
 import userValidator from './user.validator';
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
-import { FindUserDTO } from 'src/dto/user';
+import { FindMentorDTO } from 'src/dto/mentor';
 
 @Controller('user')
-@ApiExtraModels(FindUserDTO)
+@ApiExtraModels(FindMentorDTO)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -31,14 +31,14 @@ export class UserController {
         properties: {
           results: {
             type: 'array',
-            items: { $ref: getSchemaPath(FindUserDTO) },
+            items: { $ref: getSchemaPath(FindMentorDTO) },
           },
         },
       },
     ],
   },
 })
-  async listMentors(): Promise<FindUserDTO[]> {
+  async listMentors(): Promise<FindMentorDTO[]> {
     return await this.userService.listMentors();
   }
 }

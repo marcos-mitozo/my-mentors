@@ -56,22 +56,9 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        FindUserDTO: {
-            /**
-             * @description The email of the user
-             * @example john.doe@gmail.com
-             */
-            email: string;
-            /**
-             * @description The username used to signin
-             * @example johndoe
-             */
-            username: string;
-            /**
-             * @description Defines if the user is a MENTOR or a MENTEE
-             * @example MENTOR
-             */
-            role: string;
+        FindMentorDTO: {
+            bio: string;
+            rating: number;
         };
     };
     responses: never;
@@ -133,7 +120,7 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                         results: components["schemas"]["FindUserDTO"][];
+                        results: components["schemas"]["FindMentorDTO"][];
                     };
                 };
             };
